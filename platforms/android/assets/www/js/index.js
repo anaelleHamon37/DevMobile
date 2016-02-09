@@ -1,51 +1,98 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-var app = {
-    // Application Constructor
-    initialize: function() {
-        this.bindEvents();
-    },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+var movies;
+var currentPage;
+var nbMoviesTotal;
+var pageLimit = 10;
+var api_url;
+var stringResearch;
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+$(document).ready(function()
+{
+    runAppli(false);
+});
 
-        console.log('Received Event: ' + id);
+function runAppli(isSearch)    {
+    movies = [];
+    currentPage = 1;
+    nbMoviesTotal = -1;
+    $("#movies").html("");
+    $("#movies").listview("refresh");
+    if(isSearch)    {
+        api_url = 'http://api.rottentomatoes.com/api/public/v1.0/movies.json';
+        stringResearch = $("#nomFilm")[0].value;
+        if(stringResearch != "")
+            appelAPI();
     }
-};
+    else {
+        stringResearch = "";
+        api_url = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json';
+        appelAPI();
+    }
+}
 
-app.initialize();
+function appelAPI() {
+
+    $.ajax({
+        beforeSend: function() { $.mobile.loading("show"); }, //Show spinner
+        complete: function() { $.mobile.loading("hide") }, //Hide spinner
+        type:"GET",
+        url: api_url, //La route
+        data :  {
+            apikey : '7waqfqbprs7pajbz28mqf6vz',
+            page_limit : pageLimit,
+            page : currentPage,
+            q : stringResearch,
+        },
+        dataType:"jsonp", //Le type de donnée de retour
+        success: function(data){ //La fonction qui est appelée si la requête a fonctionné.
+            if(nbMoviesTotal == -1)
+                nbMoviesTotal = data.total;
+            genererPage(data);
+        },
+        error: function(){ //La fonction qui est appelée si une erreur est survenue.
+            $("#error").popup("open");
+        },
+    });       
+}
+
+function genererPage(data) {
+    for(var i=0; i<data.movies.length && movies.length < nbMoviesTotal; i++)  {
+        movies.push(data.movies[i]);
+        idMovie = movies.length-1;
+        mTitle = movies[idMovie].title;
+        mPoster = movies[idMovie].posters.original;
+        mAnnee = movies[idMovie].year;
+        $("#movies").append("<li><a href='#pagetwo' data-idmovie='"+idMovie+"'><img src='"+mPoster+"'><h2>"+mTitle+"</h2><p>"+mAnnee+"</p></a></li>")
+    }
+    $("#movies").listview("refresh");
+}
+
+
+$(document).scroll(function() {
+    if(movies.length != 0)
+        if($(document).scrollTop() + $(window).height() == $(document).height()) {
+            if(movies.length < nbMoviesTotal)   {
+                currentPage++;
+                appelAPI();
+            }
+        }
+});
+
+$(document).on('click', 'li a', function(){
+    var idMovie = $(this).data("idmovie");
+    $("#title").text(movies[idMovie].title);
+    $("#synopsis").text(movies[idMovie].synopsis);
+});
+
+
+$(document).on("panelbeforeopen", "#recherche", function( event, ui ) {
+    runAppli(true);
+} );
+
+$(document).on('click', '#closePanel', function(){
+    runAppli(false);
+    $("#recherche").panel("close");
+});
+
+$(document).on("change","#nomFilm",function(event, ui)  {
+    runAppli(true);
+});
