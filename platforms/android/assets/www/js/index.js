@@ -55,6 +55,7 @@ function appelAPI() {
 
 function genererPage(data) {
     for(var i=0; i<data.movies.length && movies.length < nbMoviesTotal; i++)  {
+        data.movies[i].picture="";
         movies.push(data.movies[i]);
         idMovie = movies.length-1;
         mTitle = movies[idMovie].title;
@@ -82,8 +83,11 @@ $(document).on('click', '.movie', function(){
     mPoster = movies[idMovie].posters.original;
     mAnnee = movies[idMovie].year;
     mResume = movies[idMovie].synopsis;
+    mPicture = movies[idMovie].picture;
+    $("#identity").text(idMovie);
     $("#title").text(mTitle);
     $("#image").attr("src",mPoster);
+    $("#picture").attr("src",mPicture);
     if(mResume != "")
         $("#synopsis").html("<span class='subtitle'>Synopsis</span> "+mResume);
 });
@@ -118,7 +122,11 @@ $(document).on('click', '.change-pic-btn', function(event) {
 
   navigator.camera.getPicture(
       function(imgData) {
-          $('.picture').attr('src', "data:image/jpeg;base64,"+imgData);
+
+            idMovie = $("#identity").text();
+            mPicture = "data:image/jpeg;base64,"+imgData;
+            movies[idMovie].picture = mPicture
+            $("#picture").attr("src",mPicture);
       },
       function() {
           alert('Error taking picture', 'Error');

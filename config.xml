@@ -19,12 +19,8 @@
     <platform name="android">
         <allow-intent href="market:*" />
         <icon src="www/img/icon.png"/>
-        <splash src="www/img/splashscreen.png"/>
-      <preference name="SplashScreenDelay" value="750" /> <!-- defaults to "3000" -->
-        <preference name="SplashScreenBackgroundColor" value="black" /> <!-- defaults to "#464646" -->
-
-        <preference name="SplashScreenWidth" value="40" /> <!-- defaults to "170" -->
-        <preference name="SplashScreenHeight" value="40" /> <!-- defaults to "200" -->
+        <splash src="www/img/SplashScreen.png" />
+        <preference name="SplashScreenDelay" value="4000" /> <!-- defaults to "3000" -->
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

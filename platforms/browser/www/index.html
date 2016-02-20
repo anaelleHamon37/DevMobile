@@ -42,14 +42,19 @@
     <h1 id="title"></h1>
   </div>
   <div data-role="main" class="ui-content">
+    <span hidden id="identity"></span>
     <img id="image" src="">
     <p id="synopsis"></p>
-    
-      <img class="picture" src="" hidden />
-      <br>
-      <a href="#" class="push-right change-pic-btn">
+
+    <div class="table-view-cell media">
+  <a href="#" class="push-right change-pic-btn">
+    <img src="" id="picture"/>
+      <span class="media-object pull-left"></span>
+      <div class="media-body">
           Change Picture
-      </a>
+      </div>
+  </a>
+</div>
   </div>
 
   <div data-role="footer">

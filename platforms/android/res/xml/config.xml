@@ -14,11 +14,7 @@
     </feature>
     <allow-intent href="market:*" />
     <icon src="www/img/icon.png" />
-    <splash src="www/img/splashscreen.png" />
-    <preference name="SplashScreenDelay" value="750" />
-    <preference name="SplashScreenBackgroundColor" value="black" />
-    <preference name="SplashScreenWidth" value="40" />
-    <preference name="SplashScreenHeight" value="40" />
+    <splash src="www/img/SplashScreen.png" />
     <name>List Of Movies</name>
     <description>
         An application to test Apache Cordova with the API Rotten Tomatoes.
