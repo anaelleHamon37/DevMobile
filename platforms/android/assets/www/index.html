@@ -10,49 +10,43 @@
 </head>
 <body>
 
-<div data-role="page" id="pageone">
+<div data-role="page" id="page1">
   <div data-role="header">
-   <a href="#recherche" class="ui-btn ui-corner-all ui-icon-search ui-btn-icon-left ui-btn-icon-notext" data-transition="slide" data-direction="reverse"></a> <h1>Films</h1>
-  </div>
-
-  <div data-role="panel" id="recherche" display="push" position="left">
-    <div data-role="header">
-    <a href="#" id="closePanel" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left ui-corner-all ui-btn-icon-notext"></a>
-    <h1>Recherche d'un film</h1>
-    </div>
-    <div class="ui-content">
-    <input type="text" name="film" id="nomFilm" placeholder="Nom du film" value="">
-    </div>
+    <h1>Films</h1>
   </div>
 
   <div data-role="main" class="ui-content">
+    <div class="ui-content">
+      <input type="text" name="film" id="nomFilm" placeholder="Nom du film" value=""/>
+    <ul data-role="listview" data-inset="true" id="movies">
+    </ul>
+      </div>
     <div data-role="popup" id="error" class="ui-content" style="max-width:280px">
      <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
      <p>Une erreur est survenue lors du chargement des données.</p>
      </div>
-    <ul data-role="listview" data-inset="true" id="movies">
-    </ul>
+    
 
   </div>
 
   <div data-role="footer">
-    <h1>Application proposée par Anaëlle Hamon et Nicolas Heldmaier</h1>
+    <h1>Anaëlle Hamon et Nicolas Heldmaier</h1>
   </div>
 </div> 
 
-<div data-role="page" id="pagetwo">
+<div data-role="page" id="page2">
     <div data-role="header">
-  <a href="#pageone" class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-left ui-btn-icon-notext" data-transition="slide" data-direction="reverse"></a>
+  <a href="#page1" class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-left ui-btn-icon-notext" data-transition="slide" data-direction="reverse"></a>
     
-    <h1>Welcome To My Homepage : Page 2</h1>
+    <h1 id="title"></h1>
   </div>
   <div data-role="main" class="ui-content">
-    <p>Titre : <span id="title"></span></p>
-    <p>Synopsis : <span id="synopsis"></span></p>
+    <img id="image" src="">
+    <p id="synopsis"></p>
   </div>
 
   <div data-role="footer">
-    <h1>Application proposée par Anaëlle Hamon et Nicolas Heldmaier</h1>
+    <h1>Anaëlle Hamon et Nicolas Heldmaier</h1>
   </div>
 </div> 
     

@@ -16,11 +16,10 @@ function runAppli(isSearch)    {
     nbMoviesTotal = -1;
     $("#movies").html("");
     $("#movies").listview("refresh");
-    if(isSearch)    {
+    stringResearch = $("#nomFilm")[0].value;
+    if(isSearch && stringResearch != "")    {
         api_url = 'http://api.rottentomatoes.com/api/public/v1.0/movies.json';
-        stringResearch = $("#nomFilm")[0].value;
-        if(stringResearch != "")
-            appelAPI();
+        appelAPI();
     }
     else {
         stringResearch = "";
@@ -61,14 +60,14 @@ function genererPage(data) {
         mTitle = movies[idMovie].title;
         mPoster = movies[idMovie].posters.original;
         mAnnee = movies[idMovie].year;
-        $("#movies").append("<li><a href='#pagetwo' data-idmovie='"+idMovie+"'><img src='"+mPoster+"'><h2>"+mTitle+"</h2><p>"+mAnnee+"</p></a></li>")
+        $("#movies").append("<li><a href='#page2' data-idmovie='"+idMovie+"'><img src='"+mPoster+"'><h2>"+mTitle+"</h2><p>"+mAnnee+"</p></a></li>")
     }
     $("#movies").listview("refresh");
 }
 
 
 $(document).scroll(function() {
-    if(movies.length != 0)
+    if(movies.length != 0 && $.mobile.activePage.attr('id') == "page1")
         if($(document).scrollTop() + $(window).height() == $(document).height()) {
             if(movies.length < nbMoviesTotal)   {
                 currentPage++;
@@ -79,8 +78,14 @@ $(document).scroll(function() {
 
 $(document).on('click', 'li a', function(){
     var idMovie = $(this).data("idmovie");
-    $("#title").text(movies[idMovie].title);
-    $("#synopsis").text(movies[idMovie].synopsis);
+    mTitle = movies[idMovie].title;
+    mPoster = movies[idMovie].posters.original;
+    mAnnee = movies[idMovie].year;
+    mResume = movies[idMovie].synopsis;
+    $("#title").text(mTitle);
+    $("#image").attr("src",mPoster);
+    if(mResume != "")
+        $("#synopsis").html("<span class='subtitle'>Synopsis</span> "+mResume);
 });
 
 
@@ -91,6 +96,8 @@ $(document).on("panelbeforeopen", "#recherche", function( event, ui ) {
 $(document).on('click', '#closePanel', function(){
     runAppli(false);
     $("#recherche").panel("close");
+    $("#nomFilm").text("0");
+    document.location.href = "#page1";
 });
 
 $(document).on("change","#nomFilm",function(event, ui)  {
