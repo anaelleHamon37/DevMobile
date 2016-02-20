@@ -118,7 +118,7 @@ $(document).on('click', '.change-pic-btn', function(event) {
 
   navigator.camera.getPicture(
       function(imgData) {
-          $('.media-object').attr('src', "data:image/jpeg;base64,"+imgData);
+          $('.picture').attr('src', "data:image/jpeg;base64,"+imgData);
       },
       function() {
           alert('Error taking picture', 'Error');

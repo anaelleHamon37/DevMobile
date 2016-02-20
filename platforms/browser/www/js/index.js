@@ -7,6 +7,7 @@ var stringResearch;
 
 $(document).ready(function()
 {
+    setTimeout(function(){}, 3500);
     runAppli(false);
 });
 
@@ -118,7 +119,8 @@ $(document).on('click', '.change-pic-btn', function(event) {
 
   navigator.camera.getPicture(
       function(imgData) {
-          $('.media-object').attr('src', "data:image/jpeg;base64,"+imgData);
+          $('.picture').attr('hidden', "false");
+          $('.picture').attr('src', "data:image/jpeg;base64,"+imgData);
       },
       function() {
           alert('Error taking picture', 'Error');

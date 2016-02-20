@@ -60,7 +60,7 @@ function genererPage(data) {
         mTitle = movies[idMovie].title;
         mPoster = movies[idMovie].posters.original;
         mAnnee = movies[idMovie].year;
-        $("#movies").append("<li><a href='#page2' data-idmovie='"+idMovie+"'><img src='"+mPoster+"'><h2>"+mTitle+"</h2><p>"+mAnnee+"</p></a></li>")
+        $("#movies").append("<li><a class='movie' href='#page2' data-idmovie='"+idMovie+"'><img src='"+mPoster+"'><h2>"+mTitle+"</h2><p>"+mAnnee+"</p></a></li>")
     }
     $("#movies").listview("refresh");
 }
@@ -76,7 +76,7 @@ $(document).scroll(function() {
         }
 });
 
-$(document).on('click', 'li a', function(){
+$(document).on('click', '.movie', function(){
     var idMovie = $(this).data("idmovie");
     mTitle = movies[idMovie].title;
     mPoster = movies[idMovie].posters.original;
@@ -102,4 +102,28 @@ $(document).on('click', '#closePanel', function(){
 
 $(document).on("change","#nomFilm",function(event, ui)  {
     runAppli(true);
+});
+
+$(document).on('click', '.change-pic-btn', function(event) {
+  event.preventDefault();
+  if (!navigator.camera) {
+      alert("Camera API not supported", "Error");
+      return;
+  }
+  var options =   {   quality: 50,
+                      destinationType: Camera.DestinationType.DATA_URL,
+                      sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
+                      encodingType: 0     // 0=JPG 1=PNG
+                  };
+
+  navigator.camera.getPicture(
+      function(imgData) {
+          $('.picture').attr('src', "data:image/jpeg;base64,"+imgData);
+      },
+      function() {
+          alert('Error taking picture', 'Error');
+      },
+      options);
+
+  return false;
 });

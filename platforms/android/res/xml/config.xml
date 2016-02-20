@@ -1,20 +1,30 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.cordova.hellocordova" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="Camera">
-        <param name="android-package" value="org.apache.cordova.CameraLauncher" />
-    </feature>
     <allow-intent href="market:*" />
-    <name>HelloCordova</name>
+    <icon src="www/img/icon.png" />
+    <splash src="www/img/splashscreen.png" />
+    <preference name="SplashScreenDelay" value="750" />
+    <preference name="SplashScreenBackgroundColor" value="black" />
+    <preference name="SplashScreenWidth" value="40" />
+    <preference name="SplashScreenHeight" value="40" />
+    <name>List Of Movies</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        An application to test Apache Cordova with the API Rotten Tomatoes.
     </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+        Nicolas Heldmaier and Anaëlle Hamon
     </author>
     <content src="index.html" />
     <access origin="*" />

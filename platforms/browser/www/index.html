@@ -7,12 +7,13 @@
 <link rel="stylesheet" href="css/index.css">
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="cordova.js"></script>
 </head>
 <body>
 
 <div data-role="page" id="page1">
   <div data-role="header">
-    <h1>Films</h1>
+    <h1>List Of Movies</h1>
   </div>
 
   <div data-role="main" class="ui-content">
@@ -43,15 +44,12 @@
   <div data-role="main" class="ui-content">
     <img id="image" src="">
     <p id="synopsis"></p>
-
-    <li class="table-view-cell media">
-  <a hre="#" class="push-right change-pic-btn">
-      <span class="media-object pull-left"></span>
-      <div class="media-body">
+    
+      <img class="picture" src="" hidden />
+      <br>
+      <a href="#" class="push-right change-pic-btn">
           Change Picture
-      </div>
-  </a>
-</li>
+      </a>
   </div>
 
   <div data-role="footer">
